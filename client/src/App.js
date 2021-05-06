@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Customer from './components/Customer';
+import CustomerAdd from './components/CustomerAdd';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -58,45 +59,50 @@ class App extends Component {
   render(){
   const { classes } = this.props;
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>로그소스번호</TableCell>
-              <TableCell>로그소스IP</TableCell>
-              <TableCell>로그소스명</TableCell>
-              <TableCell>매니저IP</TableCell>
-              <TableCell>로그소스타입</TableCell>
-              <TableCell>등록자</TableCell>
-              <TableCell>등록일시</TableCell>
-              <TableCell>중단일시</TableCell>
-            </TableRow>
-          </TableHead>
-        <TableBody>
-            {this.state.customers ? this.state.customers.map(c => {
-              return(
-                <Customer
-                key={c.id}
-                id={c.id}
-                ip={c.agent_ip}
-                name={c.name}
-                mgr_ip={c.mgr_ip}
-                type={c.type}
-                user_id={c.user_id}
-                reg_time={c.reg_time}
-                disconnect_time={c.disconnect_time}
-                />
-              )
-          }) :
-          <TableRow>
-            <TableCell colSpan="6" align="center">
-              <CirularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
-            </TableCell>
-          </TableRow>
-          }
-        </TableBody>
-      </Table>
-    </Paper>
+    <div>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>순번</TableCell>
+                  <TableCell>장비명</TableCell>
+                  <TableCell>제품군</TableCell>
+                  <TableCell>접속계정</TableCell>
+                  <TableCell>패스워드</TableCell>
+                  <TableCell>IP ADDRESS</TableCell>
+                  <TableCell>정책명(번호)</TableCell>
+                  <TableCell>패스워드(Cisco 전용)</TableCell>
+                  <TableCell>그룹명(Cisco 전용)</TableCell>
+                </TableRow>
+              </TableHead>
+            <TableBody>
+                {this.state.customers ? this.state.customers.map(c => {
+                  return(
+                    <Customer
+                    key={c.device_name}
+                    id={c.id}
+                    device_name={c.device_name}
+                    user_id={c.user_id}
+                    password={c.password}
+                    password2={c.password2}
+                    ip_address={c.ip_address}
+                    policy_id={c.policy_id}
+                    cisco_group={c.cisco_group}
+                    product={c.product}
+                    />
+                  )
+              }) :
+              <TableRow>
+                <TableCell colSpan="6" align="center">
+                  <CirularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+                </TableCell>
+              </TableRow>
+              }
+            </TableBody>
+          </Table>
+        </Paper>
+        <CustomerAdd/>
+    </div>
   )
 }
 }

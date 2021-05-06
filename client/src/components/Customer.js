@@ -9,13 +9,14 @@ class Customer extends React.Component {
         return(
                 <TableRow>
                     <TableCell>{this.props.id}</TableCell>
-                    <TableCell>{this.props.ip}</TableCell>
-                    <TableCell>{this.props.name}</TableCell>
-                    <TableCell>{this.props.mgr_ip}</TableCell>
-                    <TableCell>{this.props.type}</TableCell>
+                    <TableCell>{this.props.device_name}</TableCell>
+                    <TableCell>{this.props.product}</TableCell>
                     <TableCell>{this.props.user_id}</TableCell>
-                    <TableCell>{this.props.reg_time}</TableCell>
-                    <TableCell>{this.props.disconnect_time}</TableCell>
+                    <TableCell>{this.props.password}</TableCell>
+                    <TableCell>{this.props.ip_address}</TableCell>
+                    <TableCell>{this.props.policy_id}</TableCell>
+                    <TableCell>{this.props.password2}</TableCell>
+                    <TableCell>{this.props.cisco_group}</TableCell>
                 </TableRow>
         )
     }

@@ -25,7 +25,7 @@ connection.connect();
 // json 기본 설정 끝
 app.get('/api/customers', (req, res) => {
     connection.query(
-        "select * from agent_info_list",
+        "select * from ov_firewall_rule",
         (err, rows, fields) => {
             res.send(rows);
         }
