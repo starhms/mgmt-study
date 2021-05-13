@@ -1,20 +1,8 @@
 import React from 'react';
 import { post } from 'axios';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        width: "25ch"
-      }
-    }
-  }));
 
 class CustomerAdd extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -28,14 +16,53 @@ class CustomerAdd extends React.Component {
             policy_id: '',
             cisco_group: '',
         }
+
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.addCustomer = this.addCustomer.bind(this);
+//        this.handleFileChange = this.handleFileChange.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleClickClose = this.handleClickClose.bind(this);
     }
+    handleClickOpen() {
+        this.setState({
+            open : true
+        });
+    }
+
+    handleClickClose() {
+        this.setState({
+            id: '',
+            device_name: '',
+            product:'',
+            user_id: '',
+            password: '',
+            password2: '',
+            ip_address: '',
+            policy_id: '',
+            cisco_group: ''
+        });
+    }
+
 
     handleFormSubmit = (e) => {
         e.preventDefault()
         this.addCustomer()
-            .then((response) => { 
-                console.log(response.data);
-            })
+        .then((response) => {
+            console.log(response.data);
+            this.props.stateRefresh();
+        })            
+        this.setState({
+            device_name : '',
+            product : '',
+            user_id : '',
+            password : '',
+            ip_address  : '',
+            policy_id  : '',
+            password2  : '',
+            cisco_group  : ''
+        });
+
     }
 
     handleValueChange = (e) => {
@@ -64,87 +91,29 @@ class CustomerAdd extends React.Component {
     }
 
     render() {
+
         return (
-            <from onSubmit={this.handleFormSubmit}>
-                <h1> 로그소스 추가 </h1>
-                <TextField
-                    required
-                    id="device_name"
-                    label="장비명"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="product"
-                    label="제품군"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="device_name"
-                    label="장비명"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="user_id"
-                    label="접속계정"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="passowrd"
-                    label="패스워드"
-                    type="password"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="ip_address"
-                    label="IP ADDRESS"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    required
-                    id="policy_id"
-                    label="정책번호(명)"
-                    type="Required"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    id="password2"
-                    label="패스워드(Cisco 전용)"
-                    variant="outlined"
-                    size="small"
-                    />
-                <TextField
-                    id="cisco_group"
-                    label="그룹명(Cisco 전용)"
-                    variant="outlined"
-                    size="small"
-                    />
-                <br/>
-                <br/>
-                <br/>
-                <button type="submit"> 추가하기 </button>
-                <br/>
-                <br/>
-                <br/>
-            </from>
+        
+        <form onSubmit={this.handleFormSubmit}>
+        
+        <h1>장비 추가</h1>
+        
+        장비명: <input type="text" name="device_name" value={this.state.device_name} onChange={this.handleValueChange} /><br/>
+        제품종류: <input type="text" name="product" value={this.state.product} onChange={this.handleValueChange} /><br/>
+        로그인명: <input type="text" name="user_id" value={this.state.user_id} onChange={this.handleValueChange} /><br/>
+        패스워드: <input type="text" name="password" value={this.state.password} onChange={this.handleValueChange} /><br/>
+        ip: <input type="text" name="ip_address" value={this.state.ip_address} onChange={this.handleValueChange} /><br/>
+        정책번호: <input type="text" name="policy_id" value={this.state.policy_id} onChange={this.handleValueChange} /><br/>
+        2차 패스워드(Cisco 전용): <input type="text" name="password2" value={this.state.password2} onChange={this.handleValueChange} /><br/>
+        그룹명(Cisco 전용): <input type="text" name="cisco_group" value={this.state.cisco_group} onChange={this.handleValueChange} /><br/>
+        
+        <button type="submit">추가하기</button>
+        
+        </form>
+        
         )
-    }
+        
+        }
 }
 
 export default CustomerAdd;

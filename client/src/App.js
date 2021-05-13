@@ -28,10 +28,28 @@ const styles = theme => ({
      
 class App extends Component {
 
-  state = {
-    customers: "",
-    completed: 0
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: '' ,
+      completed:0
+    }
+    this.stateRefresh = this.stateRefresh.bind(this);
   }
+
+
+  stateRefresh() {
+    this.setState({
+    customers: '',
+    completed: 0
+    });
+  this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+}
+
+  
 
   componentDidMount() {
     this.timer = setInterval(this.progress, 20);
@@ -53,7 +71,7 @@ class App extends Component {
     
   progress = () => {
     const { completed } = this.state;
-    this.setState ({ completed: completed >= 100 ? 0 : completed + 1});
+   this.setState ({ completed: completed >= 100 ? 0 : completed + 1});
   }
 
   render(){
@@ -73,12 +91,14 @@ class App extends Component {
                   <TableCell>정책명(번호)</TableCell>
                   <TableCell>패스워드(Cisco 전용)</TableCell>
                   <TableCell>그룹명(Cisco 전용)</TableCell>
+                  <TableCell>등록일시</TableCell>
+                  <TableCell>설정</TableCell>
                 </TableRow>
               </TableHead>
             <TableBody>
                 {this.state.customers ? this.state.customers.map(c => {
                   return(
-                    <Customer
+                    <Customer stateRefresh={this.stateRefresh}
                     key={c.device_name}
                     id={c.id}
                     device_name={c.device_name}
@@ -89,6 +109,7 @@ class App extends Component {
                     policy_id={c.policy_id}
                     cisco_group={c.cisco_group}
                     product={c.product}
+                    createDate={c.createDate}
                     />
                   )
               }) :
@@ -101,7 +122,7 @@ class App extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <CustomerAdd/>
+        <CustomerAdd stateRefresh={this.stateRefresh}/>
     </div>
   )
 }
