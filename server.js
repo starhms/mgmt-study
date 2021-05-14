@@ -41,7 +41,7 @@ app.use('/image', express.static('./upload'));
 
 
 app.post('/api/customers', upload.single('image'), (req,res) => {
-    let sql = 'INSERT INTO ov_firewall_rule VALUES (?,?,?,?,?,?,?,?,null,?,now(), 0)';
+    let sql = 'INSERT INTO ov_firewall_rule VALUES (?,?,?,?,?,?,?,?,null,?,now(), 0,null)';
     let device_name = req.body.device_name;
     let user_id = req.body.user_id;
     let password = req.body.password;
